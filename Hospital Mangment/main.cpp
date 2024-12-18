@@ -1,339 +1,509 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <vector>
+#include <string>
+#include <limits>
+#include <algorithm>
+#include <map>
+#include <ctime>
 #include <iomanip>
 
-class Patient {
-    int id;
-    std::string name;
+using namespace std;
+
+class Patient
+{
+    int patientId;
+    string name;
     int age;
-    std::string disease;
+    string gender;
+    string contact;
+    string address;
+    string disease;
+    string email; // Added email
 
 public:
-    Patient(int id = 0, std::string name = "", int age = 0, std::string disease = "")
-        : id(id), name(name), age(age), disease(disease) {}
+    Patient(int patientId = 0, string name = "", int age = 0, string gender = "", string contact = "", string address = "", string disease = "", string email = "")
+        : patientId(patientId), name(name), age(age), gender(gender), contact(contact), address(address), disease(disease), email(email) {}
 
-    void inputPatientDetails() {
-        std::cout << "Enter Patient ID: ";
-        std::cin >> id;
-        std::cin.ignore();
-        std::cout << "Enter Patient Name: ";
-        std::getline(std::cin, name);
-        std::cout << "Enter Age: ";
-        std::cin >> age;
-        std::cin.ignore();
-        std::cout << "Enter Disease: ";
-        std::getline(std::cin, disease);
+    int getPatientId() const { return patientId; }
+
+    void inputPatientDetails()
+    {
+        cout << "Enter Patient ID: ";
+        cin >> patientId;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, name);
+        cout << "Enter Age: ";
+        cin >> age;
+        cin.ignore();
+        cout << "Enter Gender: ";
+        getline(cin, gender);
+        cout << "Enter Contact: ";
+        getline(cin, contact);
+        cout << "Enter Address: ";
+        getline(cin, address);
+        cout << "Enter Disease: ";
+        getline(cin, disease);
+        cout << "Enter Email: "; // Added email input
+        getline(cin, email);
     }
 
-    void displayPatientDetails() const {
-        std::cout << "\nID: " << id
-                  << "\nName: " << name
-                  << "\nAge: " << age
-                  << "\nDisease: " << disease << "\n";
+    void displayPatientDetails() const
+    {
+        cout << "\nPatient ID: " << patientId
+             << "\nName: " << name
+             << "\nAge: " << age
+             << "\nGender: " << gender
+             << "\nContact: " << contact
+             << "\nAddress: " << address
+             << "\nDisease: " << disease
+             << "\nEmail: " << email << "\n"; // Added email display
     }
 
-    int getId() const { return id; }
-
-    void saveToFile(std::ofstream &outFile) const {
-        outFile << id << "," << name << "," << age << "," << disease << "\n";
+    void saveToFile(ofstream &outFile) const
+    {
+        outFile << patientId << "," << name << "," << age << "," << gender << "," << contact << "," << address << "," << disease << "," << email << "\n";
     }
 
-    void loadFromFile(std::ifstream &inFile) {
+    void loadFromFile(ifstream &inFile)
+    {
         char delimiter;
-        inFile >> id >> delimiter;
-        std::getline(inFile, name, ',');
+        inFile >> patientId >> delimiter;
+        getline(inFile, name, ',');
         inFile >> age >> delimiter;
-        std::getline(inFile, disease);
+        getline(inFile, gender, ',');
+        getline(inFile, contact, ',');
+        getline(inFile, address, ',');
+        getline(inFile, disease, ',');
+        getline(inFile, email); // Added loading email
     }
 };
 
-class Doctor {
-    int id;
-    std::string name;
-    std::string specialization;
+class Doctor
+{
+    int doctorId;
+    string name;
+    string specialization;
+    string contact;
+    string email; // Added email
 
 public:
-    Doctor(int id = 0, std::string name = "", std::string specialization = "")
-        : id(id), name(name), specialization(specialization) {}
+    Doctor(int doctorId = 0, string name = "", string specialization = "", string contact = "", string email = "")
+        : doctorId(doctorId), name(name), specialization(specialization), contact(contact), email(email) {}
 
-    void inputDoctorDetails() {
-        std::cout << "Enter Doctor ID: ";
-        std::cin >> id;
-        std::cin.ignore();
-        std::cout << "Enter Doctor Name: ";
-        std::getline(std::cin, name);
-        std::cout << "Enter Specialization: ";
-        std::getline(std::cin, specialization);
+    int getDoctorId() const { return doctorId; }
+
+    void inputDoctorDetails()
+    {
+        cout << "Enter Doctor ID: ";
+        cin >> doctorId;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, name);
+        cout << "Enter Specialization: ";
+        getline(cin, specialization);
+        cout << "Enter Contact: ";
+        getline(cin, contact);
+        cout << "Enter Email: "; // Added email input
+        getline(cin, email);
     }
 
-    void displayDoctorDetails() const {
-        std::cout << "\nID: " << id
-                  << "\nName: " << name
-                  << "\nSpecialization: " << specialization << "\n";
+    void displayDoctorDetails() const
+    {
+        cout << "\nDoctor ID: " << doctorId
+             << "\nName: " << name
+             << "\nSpecialization: " << specialization
+             << "\nContact: " << contact
+             << "\nEmail: " << email << "\n"; // Added email display
     }
 
-    int getId() const { return id; }
-
-    void saveToFile(std::ofstream &outFile) const {
-        outFile << id << "," << name << "," << specialization << "\n";
+    void saveToFile(ofstream &outFile) const
+    {
+        outFile << doctorId << "," << name << "," << specialization << "," << contact << "," << email << "\n";
     }
 
-    void loadFromFile(std::ifstream &inFile) {
+    void loadFromFile(ifstream &inFile)
+    {
         char delimiter;
-        inFile >> id >> delimiter;
-        std::getline(inFile, name, ',');
-        std::getline(inFile, specialization);
+        inFile >> doctorId >> delimiter;
+        getline(inFile, name, ',');
+        getline(inFile, specialization, ',');
+        getline(inFile, contact, ',');
+        getline(inFile, email); // Added loading email
     }
 };
 
-class Appointment {
+class Appointment
+{
     int appointmentId;
     int patientId;
     int doctorId;
-    std::string date;
+    string date;
+    string time;
+    string reason;
 
 public:
-    Appointment(int appointmentId = 0, int patientId = 0, int doctorId = 0, std::string date = "")
-        : appointmentId(appointmentId), patientId(patientId), doctorId(doctorId), date(date) {}
+    Appointment(int appointmentId = 0, int patientId = 0, int doctorId = 0, string date = "", string time = "", string reason = "")
+        : appointmentId(appointmentId), patientId(patientId), doctorId(doctorId), date(date), time(time), reason(reason) {}
 
-    void inputAppointmentDetails() {
-        std::cout << "Enter Appointment ID: ";
-        std::cin >> appointmentId;
-        std::cout << "Enter Patient ID: ";
-        std::cin >> patientId;
-        std::cout << "Enter Doctor ID: ";
-        std::cin >> doctorId;
-        std::cin.ignore();
-        std::cout << "Enter Appointment Date (YYYY-MM-DD): ";
-        std::getline(std::cin, date);
+    int getAppointmentId() const { return appointmentId; }
+
+    void inputAppointmentDetails()
+    {
+        cout << "Enter Appointment ID: ";
+        cin >> appointmentId;
+        cin.ignore();
+        cout << "Enter Patient ID: ";
+        cin >> patientId;
+        cout << "Enter Doctor ID: ";
+        cin >> doctorId;
+        cin.ignore();
+        cout << "Enter Date (YYYY-MM-DD): ";
+        getline(cin, date);
+        cout << "Enter Time (HH:MM): ";
+        getline(cin, time);
+        cout << "Enter Reason for Visit: ";
+        getline(cin, reason);
     }
 
-    void displayAppointmentDetails() const {
-        std::cout << "\nAppointment ID: " << appointmentId
-                  << "\nPatient ID: " << patientId
-                  << "\nDoctor ID: " << doctorId
-                  << "\nDate: " << date << "\n";
+    void displayAppointmentDetails() const
+    {
+        cout << "\nAppointment ID: " << appointmentId
+             << "\nPatient ID: " << patientId
+             << "\nDoctor ID: " << doctorId
+             << "\nDate: " << date
+             << "\nTime: " << time
+             << "\nReason: " << reason << "\n";
     }
 
-    void saveToFile(std::ofstream &outFile) const {
-        outFile << appointmentId << "," << patientId << "," << doctorId << "," << date << "\n";
+    void saveToFile(ofstream &outFile) const
+    {
+        outFile << appointmentId << "," << patientId << "," << doctorId << "," << date << "," << time << "," << reason << "\n";
     }
 
-    void loadFromFile(std::ifstream &inFile) {
+    void loadFromFile(ifstream &inFile)
+    {
         char delimiter;
         inFile >> appointmentId >> delimiter;
         inFile >> patientId >> delimiter;
         inFile >> doctorId >> delimiter;
-        std::getline(inFile, date);
+        getline(inFile, date, ',');
+        getline(inFile, time, ',');
+        getline(inFile, reason);
     }
 };
 
-std::vector<Patient> patientRecords;
-std::vector<Doctor> doctorRecords;
-std::vector<Appointment> appointmentRecords;
+// Function to update patient details
+void updatePatientDetails(vector<Patient> &patients)
+{
+    int id;
+    cout << "Enter Patient ID to update: ";
+    cin >> id;
+    cin.ignore();
 
-void addPatient() {
-    Patient p;
-    p.inputPatientDetails();
-    patientRecords.push_back(p);
-    std::cout << "Patient record added successfully!\n";
-}
+    auto it = find_if(patients.begin(), patients.end(), [id](const Patient &p)
+                      { return p.getPatientId() == id; });
 
-void viewPatients() {
-    if (patientRecords.empty()) {
-        std::cout << "No patient records found.\n";
-        return;
+    if (it != patients.end())
+    {
+        cout << "Patient found! Updating details...\n";
+        it->inputPatientDetails();
     }
-
-    for (const auto &p : patientRecords) {
-        p.displayPatientDetails();
-    }
-}
-
-void savePatientsToFile() {
-    std::ofstream outFile("patients.txt");
-    for (const auto &p : patientRecords) {
-        p.saveToFile(outFile);
-    }
-    outFile.close();
-    std::cout << "Patient records saved to file successfully!\n";
-}
-
-void loadPatientsFromFile() {
-    std::ifstream inFile("patients.txt");
-    if (!inFile) {
-        std::cout << "No existing patient records file found.\n";
-        return;
-    }
-
-    patientRecords.clear();
-    while (inFile.peek() != EOF) {
-        Patient p;
-        p.loadFromFile(inFile);
-        patientRecords.push_back(p);
-    }
-    inFile.close();
-    std::cout << "Patient records loaded from file successfully!\n";
-}
-
-void addDoctor() {
-    Doctor d;
-    d.inputDoctorDetails();
-    doctorRecords.push_back(d);
-    std::cout << "Doctor record added successfully!\n";
-}
-
-void viewDoctors() {
-    if (doctorRecords.empty()) {
-        std::cout << "No doctor records found.\n";
-        return;
-    }
-
-    for (const auto &d : doctorRecords) {
-        d.displayDoctorDetails();
+    else
+    {
+        cout << "Patient not found.\n";
     }
 }
 
-void saveDoctorsToFile() {
-    std::ofstream outFile("doctors.txt");
-    for (const auto &d : doctorRecords) {
-        d.saveToFile(outFile);
+// Function to update doctor details
+void updateDoctorDetails(vector<Doctor> &doctors)
+{
+    int id;
+    cout << "Enter Doctor ID to update: ";
+    cin >> id;
+    cin.ignore();
+
+    auto it = find_if(doctors.begin(), doctors.end(), [id](const Doctor &d)
+                      { return d.getDoctorId() == id; });
+
+    if (it != doctors.end())
+    {
+        cout << "Doctor found! Updating details...\n";
+        it->inputDoctorDetails();
     }
-    outFile.close();
-    std::cout << "Doctor records saved to file successfully!\n";
-}
-
-void loadDoctorsFromFile() {
-    std::ifstream inFile("doctors.txt");
-    if (!inFile) {
-        std::cout << "No existing doctor records file found.\n";
-        return;
-    }
-
-    doctorRecords.clear();
-    while (inFile.peek() != EOF) {
-        Doctor d;
-        d.loadFromFile(inFile);
-        doctorRecords.push_back(d);
-    }
-    inFile.close();
-    std::cout << "Doctor records loaded from file successfully!\n";
-}
-
-void addAppointment() {
-    Appointment a;
-    a.inputAppointmentDetails();
-    appointmentRecords.push_back(a);
-    std::cout << "Appointment record added successfully!\n";
-}
-
-void viewAppointments() {
-    if (appointmentRecords.empty()) {
-        std::cout << "No appointment records found.\n";
-        return;
-    }
-
-    for (const auto &a : appointmentRecords) {
-        a.displayAppointmentDetails();
+    else
+    {
+        cout << "Doctor not found.\n";
     }
 }
 
-void saveAppointmentsToFile() {
-    std::ofstream outFile("appointments.txt");
-    for (const auto &a : appointmentRecords) {
-        a.saveToFile(outFile);
+// Function to update appointment details
+void updateAppointmentDetails(vector<Appointment> &appointments)
+{
+    int id;
+    cout << "Enter Appointment ID to update: ";
+    cin >> id;
+    cin.ignore();
+
+    auto it = find_if(appointments.begin(), appointments.end(), [id](const Appointment &a)
+                      { return a.getAppointmentId() == id; });
+
+    if (it != appointments.end())
+    {
+        cout << "Appointment found! Updating details...\n";
+        it->inputAppointmentDetails();
     }
-    outFile.close();
-    std::cout << "Appointment records saved to file successfully!\n";
+    else
+    {
+        cout << "Appointment not found.\n";
+    }
 }
 
-void loadAppointmentsFromFile() {
-    std::ifstream inFile("appointments.txt");
-    if (!inFile) {
-        std::cout << "No existing appointment records file found.\n";
-        return;
+// Function to delete patient by ID
+void deletePatient(vector<Patient> &patients, int id)
+{
+    auto it = remove_if(patients.begin(), patients.end(), [id](const Patient &p)
+                        { return p.getPatientId() == id; });
+    if (it != patients.end())
+    {
+        patients.erase(it, patients.end());
+        cout << "Patient deleted successfully.\n";
     }
-
-    appointmentRecords.clear();
-    while (inFile.peek() != EOF) {
-        Appointment a;
-        a.loadFromFile(inFile);
-        appointmentRecords.push_back(a);
+    else
+    {
+        cout << "Patient not found.\n";
     }
-    inFile.close();
-    std::cout << "Appointment records loaded from file successfully!\n";
 }
 
-void showMainMenu() {
-    std::cout << "\n--- Hospital Management System ---\n";
-    std::cout << "1. Add Patient\n";
-    std::cout << "2. View Patients\n";
-    std::cout << "3. Save Patients to File\n";
-    std::cout << "4. Load Patients from File\n";
-    std::cout << "5. Add Doctor\n";
-    std::cout << "6. View Doctors\n";
-    std::cout << "7. Save Doctors to File\n";
-    std::cout << "8. Load Doctors from File\n";
-    std::cout << "9. Add Appointment\n";
-    std::cout << "10. View Appointments\n";
-    std::cout << "11. Save Appointments to File\n";
-    std::cout << "12. Load Appointments from File\n";
-    std::cout << "13. Exit\n";
-    std::cout << "Enter your choice: ";
+// Function to delete doctor by ID
+void deleteDoctor(vector<Doctor> &doctors, int id)
+{
+    auto it = remove_if(doctors.begin(), doctors.end(), [id](const Doctor &d)
+                        { return d.getDoctorId() == id; });
+    if (it != doctors.end())
+    {
+        doctors.erase(it, doctors.end());
+        cout << "Doctor deleted successfully.\n";
+    }
+    else
+    {
+        cout << "Doctor not found.\n";
+    }
 }
 
-int main() {
+// Function to delete appointment by ID
+void deleteAppointment(vector<Appointment> &appointments, int id)
+{
+    auto it = remove_if(appointments.begin(), appointments.end(), [id](const Appointment &a)
+                        { return a.getAppointmentId() == id; });
+    if (it != appointments.end())
+    {
+        appointments.erase(it, appointments.end());
+        cout << "Appointment deleted successfully.\n";
+    }
+    else
+    {
+        cout << "Appointment not found.\n";
+    }
+}
+
+// Save all data to files
+void saveAllData(const vector<Patient> &patients, const vector<Doctor> &doctors, const vector<Appointment> &appointments)
+{
+    ofstream patientFile("patients.txt");
+    ofstream doctorFile("doctors.txt");
+    ofstream appointmentFile("appointments.txt");
+
+    if (patientFile.is_open() && doctorFile.is_open() && appointmentFile.is_open())
+    {
+        for (const auto &patient : patients)
+        {
+            patient.saveToFile(patientFile);
+        }
+        for (const auto &doctor : doctors)
+        {
+            doctor.saveToFile(doctorFile);
+        }
+        for (const auto &appointment : appointments)
+        {
+            appointment.saveToFile(appointmentFile);
+        }
+    }
+    else
+    {
+        cout << "Error opening file for saving data.\n";
+    }
+
+    patientFile.close();
+    doctorFile.close();
+    appointmentFile.close();
+}
+
+// Load all data from files
+void loadAllData(vector<Patient> &patients, vector<Doctor> &doctors, vector<Appointment> &appointments)
+{
+    ifstream patientFile("patients.txt");
+    ifstream doctorFile("doctors.txt");
+    ifstream appointmentFile("appointments.txt");
+
+    if (patientFile.is_open() && doctorFile.is_open() && appointmentFile.is_open())
+    {
+        Patient patient;
+        while (patientFile)
+        {
+            patient.loadFromFile(patientFile);
+            if (patientFile)
+                patients.push_back(patient);
+        }
+
+        Doctor doctor;
+        while (doctorFile)
+        {
+            doctor.loadFromFile(doctorFile);
+            if (doctorFile)
+                doctors.push_back(doctor);
+        }
+
+        Appointment appointment;
+        while (appointmentFile)
+        {
+            appointment.loadFromFile(appointmentFile);
+            if (appointmentFile)
+                appointments.push_back(appointment);
+        }
+    }
+    else
+    {
+        cout << "Error opening file for loading data.\n";
+    }
+
+    patientFile.close();
+    doctorFile.close();
+    appointmentFile.close();
+}
+
+// Display all data
+void displayAllData(const vector<Patient> &patients, const vector<Doctor> &doctors, const vector<Appointment> &appointments)
+{
+    cout << "\nLilawat Hospital Management System\n";
+
+    cout << "\nPatients:\n";
+    for (const auto &patient : patients)
+    {
+        patient.displayPatientDetails();
+    }
+
+    cout << "\nDoctors:\n";
+    for (const auto &doctor : doctors)
+    {
+        doctor.displayDoctorDetails();
+    }
+
+    cout << "\nAppointments:\n";
+    for (const auto &appointment : appointments)
+    {
+        appointment.displayAppointmentDetails();
+    }
+}
+
+// Main menu for the hospital system
+int main()
+{
+    vector<Patient> patients;
+    vector<Doctor> doctors;
+    vector<Appointment> appointments;
+
+    loadAllData(patients, doctors, appointments);
+
     int choice;
-    do {
-        showMainMenu();
-        std::cin >> choice;
+    while (true)
+    {
+        cout << "\nLilawat Hospital Management System\n";
+        cout << "1. Add Patient\n";
+        cout << "2. Add Doctor\n";
+        cout << "3. Add Appointment\n";
+        cout << "4. Update Patient Details\n";
+        cout << "5. Update Doctor Details\n";
+        cout << "6. Update Appointment Details\n";
+        cout << "7. Display All Data\n";
+        cout << "8. Save All Data\n";
+        cout << "9. Delete Patient\n";
+        cout << "10. Delete Doctor\n";
+        cout << "11. Delete Appointment\n";
+        cout << "12. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore();
 
-        switch (choice) {
+        switch (choice)
+        {
         case 1:
-            addPatient();
+        {
+            Patient p;
+            p.inputPatientDetails();
+            patients.push_back(p);
             break;
+        }
         case 2:
-            viewPatients();
+        {
+            Doctor d;
+            d.inputDoctorDetails();
+            doctors.push_back(d);
             break;
+        }
         case 3:
-            savePatientsToFile();
+        {
+            Appointment a;
+            a.inputAppointmentDetails();
+            appointments.push_back(a);
             break;
+        }
         case 4:
-            loadPatientsFromFile();
+            updatePatientDetails(patients);
             break;
         case 5:
-            addDoctor();
+            updateDoctorDetails(doctors);
             break;
         case 6:
-            viewDoctors();
+            updateAppointmentDetails(appointments);
             break;
         case 7:
-            saveDoctorsToFile();
+            displayAllData(patients, doctors, appointments);
             break;
         case 8:
-            loadDoctorsFromFile();
+            saveAllData(patients, doctors, appointments);
+            cout << "Data saved successfully.\n";
             break;
         case 9:
-            addAppointment();
+        {
+            int id;
+            cout << "Enter Patient ID to delete: ";
+            cin >> id;
+            deletePatient(patients, id);
             break;
-        case 10:
-            viewAppointments();
-            break;
-        case 11:
-            saveAppointmentsToFile();
-            break;
-        case 12:
-            loadAppointmentsFromFile();
-            break;
-        case 13:
-            std::cout << "Exiting the system. Goodbye!\n";
-            break;
-        default:
-            std::cout << "Invalid choice. Please try again.\n";
         }
-    } while (choice != 13);
-
-    return 0;
+        case 10:
+        {
+            int id;
+            cout << "Enter Doctor ID to delete: ";
+            cin >> id;
+            deleteDoctor(doctors, id);
+            break;
+        }
+        case 11:
+        {
+            int id;
+            cout << "Enter Appointment ID to delete: ";
+            cin >> id;
+            deleteAppointment(appointments, id);
+            break;
+        }
+        case 12:
+            cout << "Exiting system...\n";
+            return 0;
+        default:
+            cout << "Invalid choice, please try again.\n";
+        }
+    }
 }
