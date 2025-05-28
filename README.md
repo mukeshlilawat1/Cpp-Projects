@@ -16,7 +16,7 @@
 
 ## 🧠 Overview
 
-This repository contains a set of small to medium-sized projects written in the C programming language. These are ideal for beginners and intermediate learners to:
+This repository contains a set of small to medium-sized projects written in the C++ programming language. These are ideal for beginners and intermediate learners to:
 
 - Practice basic programming skills
 - Understand project structure and logic
@@ -27,10 +27,10 @@ This repository contains a set of small to medium-sized projects written in the 
 
 ## 🛠 Technologies Used
 
-- **C Language**
+- **C++ Language**
 - **GCC Compiler**
 - **Command Line Interface (CLI)**
-- **Any C-supported IDE (VS Code, Turbo C++, Code::Blocks, etc.)**
+- **Any C++-supported IDE (VS Code, Turbo C++, Code::Blocks, etc.)**
 
 ---
 
