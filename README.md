@@ -1,6 +1,6 @@
 <!-- Logo / Banner Section -->
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="C Programming" width="120" height="120">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Cpp_Programming_Language.svg" alt="C Programming" width="120" height="120">
 </p>
 
 <h1 align="center">💻 C-Projects</h1>
