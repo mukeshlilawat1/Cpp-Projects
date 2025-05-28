@@ -56,7 +56,7 @@ This repository contains a set of small to medium-sized projects written in the 
  ##  🎯 Learning Objectives
 ➡️By working with these projects, you will:
 <br/>
-➡️Reinforce your understanding of C syntax and logic
+➡️Reinforce your understanding of C++ syntax and logic
 <br/>
 ➡️Learn how to handle files and manage data
 <br/>
