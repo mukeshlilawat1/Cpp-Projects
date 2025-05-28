@@ -9,7 +9,7 @@
 
 <h1 align="center">💻 Cpp-Projects</h1>
 <p align="center">
-  A collection of beginner-friendly and real-world C language projects to strengthen your programming fundamentals.
+  A collection of beginner-friendly and real-world C++ language projects to strengthen your programming fundamentals.
 </p>
 
 ---
