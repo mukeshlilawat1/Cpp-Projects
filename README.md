@@ -3,7 +3,7 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C++_Programming_Language.svg" alt="C Programming" width="120" height="120">
 </p>
 
-<h1 align="center">💻 C-Projects</h1>
+<h1 align="center">💻 Cpp-Projects</h1>
 <p align="center">
   A collection of beginner-friendly and real-world C language projects to strengthen your programming fundamentals.
 </p>
@@ -51,21 +51,34 @@ This repository contains a set of small to medium-sized projects written in the 
 
  ##  🎯 Learning Objectives
 ➡️By working with these projects, you will:
+<br/>
 ➡️Reinforce your understanding of C syntax and logic
+<br/>
 ➡️Learn how to handle files and manage data
+<br/>
 ➡️Improve your problem-solving skills
+<br/>
 ➡️Understand how real-world console apps are built
+<br/>
 ➡️Build confidence for interviews or coursework
 
 ## 🙌 Contributions
 ➡️Contributions are always welcome! You can:
+<br/>
 ➡️Add new projects
+<br/>
 ➡️Fix bugs or suggest improvements
+<br/>
 ➡️Enhance code readability or documentation
+<br/>
 ➡️To contribute:
+<br/>
 ➡️Fork the repo
+<br/>
 ➡️Create a new branch
+<br/>
 ➡️Make your changes
+<br/>
 ➡️Submit a pull request
 
 ## 📄 License
