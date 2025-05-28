@@ -20,7 +20,7 @@ This repository contains a set of small to medium-sized projects written in the 
 
 - Practice basic programming skills
 - Understand project structure and logic
-- Learn real-world applications of C
+- Learn real-world applications of C++
 - Prepare for college assignments or mini-projects
 
 ---
