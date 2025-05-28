@@ -1,9 +1,10 @@
 <!-- Logo / Banner Section -->
 <p align="center">
   <a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank" rel="noopener noreferrer">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C++_Programming_Language.svg" alt="C++ Programming Language" width="120" height="120">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Programming Language" width="120" height="120">
   </a>
 </p>
+
 
 
 <h1 align="center">💻 Cpp-Projects</h1>
