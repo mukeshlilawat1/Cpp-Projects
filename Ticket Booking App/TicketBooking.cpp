@@ -91,5 +91,20 @@ int main(int argc, char const *argv[])
 
     Sleep(3000);
 
+    if (mysql_query(conn, "CREATE TABLE IF NOT EXISTS Ticket(RowNumber INT, SeatNumber INT, Seat INT)")) {
+        cout << "Error : " << mysql_error(conn) << endl;
+    }
+
+    for(int row=1; row <= 10; row++) {
+        for(int seatNumber = 1; seatNumber <= 10; seatNumber++) {
+            stringstream s;
+            s <<"INSERT INTO Ticket (RowNumber, SeatNumber, Seat)" <<
+             " SELECT '"<< row << " ', '"<<seatNumber
+             <<"', '1'" << "WHERE NOT EXISTS (SELECT * FROM Ticket WHERE RowNumber = '"
+             << row"' AND SeatNumber = '"<<seatNumber<<"')";
+        }
+    }
+    
+
     return 0;
 }
